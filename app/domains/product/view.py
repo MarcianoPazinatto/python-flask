@@ -5,7 +5,7 @@ from app.domains.product.action import \
     create as create_product, \
     get as get_products, \
     get_by_id as get_by_id_product,\
-    update as update_product, delete_product
+    update as update_product, delete_product, update_product_with_category
 
 ProductMa = ProductSchema()
 app_product = Blueprint('app.product', __name__)
@@ -40,3 +40,8 @@ def patch(id:str) -> Tuple:
 def delete(id: str) -> Tuple:
     delete_product(id)
     return jsonify({}), 204
+
+@app_product.route('/product/<_product_id>/category/<_category_id>', methods=['POST'])
+def create_product_with_category(_product_id: str, _category_id:str) -> tuple:
+    _product = update_product_with_category(_product_id, _category_id)
+    return ProductMa.dump(_product), 200
