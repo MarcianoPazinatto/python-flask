@@ -1,0 +1,13 @@
+version: '3'
+services:
+  database_1:
+    image: postgres:11.5-alpine
+    restart: always
+    volumes:
+      - flaskapidb:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+    env_file:
+      - .env.docker
+volumes:
+  flaskapidb:
