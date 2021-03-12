@@ -6,7 +6,7 @@ from typing import List, NoReturn
 
 def create(data: dict) -> List[Address]:
     return save(Address(id=str(uuid4()), street=data['street'], number=data['number'], district=data['district'],
-                        cep=data['cep'], complement=data['complement'], city=data['city'], state=data['state'],
+                        zip_code=data['zip_code'], complement=data['complement'], city=data['city'], state=data['state'],
                         country=data['country'], seller_id=data['seller_id']))
 
 
@@ -23,7 +23,7 @@ def update(_address_id: str, data: dict) -> Address:
     _address.street = data.get('street')
     _address.number = data.get('number')
     _address.district = data.get('district')
-    _address.cep = data.get('cep')
+    _address.zip_code = data.get('zip_code')
     _address.complement = data.get('complement')
     _address.city = data.get('city')
     _address.state = data.get('state')

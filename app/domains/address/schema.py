@@ -7,4 +7,3 @@ class AddressSchema(ma.SQLAlchemyAutoSchema):
     class Meta:
         model = Address()
         include_fk = True
-
