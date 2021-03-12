@@ -17,6 +17,8 @@ marshmallow = "*"
 marshmallow-sqlalchemy = "*"
 python-dotenv = "*"
 psycopg2 = "*"
+validate-docbr = "*"
+email-validator = "*"
 
 [requires]
 python_version = "3.8"
