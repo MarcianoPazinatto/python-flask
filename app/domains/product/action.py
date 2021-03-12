@@ -14,7 +14,6 @@ _LEN_MAX_FIELD_VALUE = 30
 
 
 def create(data: dict) -> List[Product]:
-
     validate_all_fields_product(data)
     return save(Product(id=str(uuid4()), name=data['name'], description=data['description'], value=data['value']))
 
@@ -68,8 +67,10 @@ def value_validate(value: str):
     if not value or len(value) > _LEN_MAX_FIELD_VALUE:
         raise BadRequestException(msg=f"Value field cannot be empty or exceed "
                                       f"{_LEN_MAX_FIELD_VALUE} limit of characters")
-    if findall('[a-zA-Z!@#$%¨&*()`´^~:,<>?}{]', value):
-        raise BadRequestException(msg="The field value, must be represented by a float number")
+    try:
+        float(value)
+    except ValueError:
+        raise BadRequestException("The field value, must be represented by a float number")
 
 
 def validate_all_fields_product(data):
