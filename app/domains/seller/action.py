@@ -75,7 +75,7 @@ def email_validate(email: str):
         raise UnprocessableException(msg=str(ex))
 
 
-def validate_all_fields(data):
+def validate_all_fields(data: dict):
     company_name_validate(data['company_name'])
     cnpj_validate(data['cnpj'])
     trade_name_validate(data['trade_name'])
