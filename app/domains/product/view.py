@@ -4,7 +4,7 @@ from app.domains.product.schema import ProductSchema
 from app.domains.product.action import \
     create as create_product, \
     get as get_products, \
-    get_by_id as get_by_id_product,\
+    get_by_id as get_by_id_product, get_all_products, \
     update as update_product, delete_product, update_product_with_category
 
 ProductMa = ProductSchema()
@@ -20,7 +20,11 @@ def post() -> Tuple:
 
 @app_product.route('/products', methods=['GET'])
 def get() -> Tuple:
-    return jsonify([ProductMa.dump(product) for product in get_products()]), 200
+    payload = request.get_json()
+    if payload:
+        filtered_products = get_products(payload)
+        return jsonify([ProductMa.dump(product) for product in filtered_products]), 200
+    return jsonify([ProductMa.dump(product) for product in get_all_products()]), 200
 
 
 @app_product.route('/product/<id>', methods=['GET'])
@@ -30,7 +34,7 @@ def get_by_id(id: str) -> Tuple:
 
 
 @app_product.route('/product/<id>', methods=['PATCH'])
-def patch(id:str) -> Tuple:
+def patch(id: str) -> Tuple:
     payload = request.get_json()
     product = update_product(id, payload)
     return ProductMa.dump(product), 200
@@ -41,7 +45,8 @@ def delete(id: str) -> Tuple:
     delete_product(id)
     return jsonify({}), 204
 
+
 @app_product.route('/product/<_product_id>/category/<_category_id>', methods=['POST'])
-def create_product_with_category(_product_id: str, _category_id:str) -> tuple:
+def create_product_with_category(_product_id: str, _category_id: str) -> tuple:
     _product = update_product_with_category(_product_id, _category_id)
     return ProductMa.dump(_product), 200

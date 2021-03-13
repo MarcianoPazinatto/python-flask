@@ -12,8 +12,20 @@ def create(data: dict) -> List[Product]:
     return save(Product(id=str(uuid4()), name=data['name'], description=data['description'], value=data['value']))
 
 
-def get() -> List:
+def get_all_products() -> List:
     return Product.query.all()
+
+
+def get(data) -> List:
+    if data['name'] != "" and data['description'] == "" and data['value'] == "":
+        return Product.query.filter_by(name=data['name'])
+    elif data['name'] == "" and data['description'] != "" and data['value'] == "":
+        return Product.query.filter_by(description=data['description'])
+    elif data['name'] == "" and data['description'] == "" and data['value'] != "":
+        return Product.query.filter_by(value=data['value'])
+    elif data['name'] != "" and data['description'] != "" and data['value'] != "":
+        return Product.query.filter_by(name=data['name']).filter_by(description=data['description']).filter_by(
+            value=data['value'])
 
 
 def get_by_id(_product_id: str) -> Product:
