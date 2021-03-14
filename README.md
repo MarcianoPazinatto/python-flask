@@ -16,6 +16,8 @@
 
 * Postman - Allows you to test the functionality of the API
 
+* DBeaver version 7.2 - for data persistence and and PostgreSQL database modeling
+
 ### Packages:
 * flask 
 * flask-migrate
@@ -48,15 +50,29 @@ run on the IDE terminal: ****pipenv install****
 run on IDE terminal: ****docker-compose up -d****
 
 5º - 
-run on IDE terminal: ****export FLASK_ENV=development**** 
+create connection with PostgreSQL
+
+```
+Host = localhost
+
+Database = python-flask 
+
+password = senha
+
+Username = create connection with PostgreSQL
+```
+ ![](app/utils/images/dbeaver.PNG?raw=true)
 
 6º - 
-run on IDE terminal: ****FLASK_ENV=development flask db migrate****           
+run on IDE terminal: ****export FLASK_ENV=development**** 
 
 7º - 
+run on IDE terminal: ****FLASK_ENV=development flask db migrate****           
+
+8º - 
 run on IDE terminal: ****FLASK_ENV=development flask db upgrade****     
 
-8º -  run on the IDE terminal: ****pipenv run flask run****
+9º -  run on the IDE terminal: ****pipenv run flask run****
 
 ## Run API
 
