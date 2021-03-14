@@ -4,19 +4,23 @@
 
 ### Requirements
 
-* python_version = 3.8
+* ***If Windows is used to run, windows 10 64 bits are required, this project is compatible with linux distributions.***
 
-* Docker preferably latest version
+* python_version = 3.8 - download link for windows: https://www.python.org/downloads/windows/ 
+
+* Docker preferably latest version - download link for windows: https://www.docker.com/products/docker-desktop
 
 * Pipenv
 
 * Integrated Development Environment of your preference - Pycharm was used in the creation of this project.
+download link for windows: https://www.jetbrains.com/pt-br/pycharm/download/#section=windows
 
-* git 2.0
+* git 2.0 - download link for windows https://git-scm.com/
 
-* Postman - Allows you to test the functionality of the API
+* Postman - Allows you to test the functionality of the API - download link for windows: https://www.postman.com/downloads/
 
-* DBeaver version 7.2 - for data persistence and and PostgreSQL database modeling
+* DBeaver version 7.2 - for data persistence and and PostgreSQL database modeling - 
+ download link for windows https://dbeaver.io/download/
 
 ### Packages:
 * flask 
@@ -41,16 +45,18 @@
 Clone project on Github
 
 2º - 
-run on the IDE terminal: ****pip install --user pipenv****
+run on the IDE terminal: ****"pip install --user pipenv"**** or ****"pip install pipenv"****
+ *(if necessary you must activate the pipenv environment)*  
+Refer to support documents: https://python-guide-pt-br.readthedocs.io/pt_BR/latest/dev/virtualenvs.html
 
 3º - 
-run on the IDE terminal: ****pipenv install****
+run on the IDE terminal: ****"pipenv install"****
 
 4º - 
-run on IDE terminal: ****docker-compose up -d****
+run on IDE terminal: ****"docker-compose up -d"****
 
 5º - 
-create connection with PostgreSQL
+create connection with PostgreSQL - Using DBeaver
 
 ```
 Host = localhost
@@ -64,15 +70,15 @@ Username = create connection with PostgreSQL
  ![](app/utils/images/dbeaver.PNG?raw=true)
 
 6º - 
-run on IDE terminal: ****export FLASK_ENV=development**** 
+run on IDE terminal: ****"export FLASK_ENV=development"**** 
 
 7º - 
-run on IDE terminal: ****FLASK_ENV=development flask db migrate****           
+run on IDE terminal: ****"FLASK_ENV=development flask db migrate"****           
 
 8º - 
-run on IDE terminal: ****FLASK_ENV=development flask db upgrade****     
+run on IDE terminal: ****"FLASK_ENV=development flask db upgrade"****     
 
-9º -  run on the IDE terminal: ****pipenv run flask run****
+9º -  run on the IDE terminal: ****"pipenv run flask run"****
 
 ## Run API
 
