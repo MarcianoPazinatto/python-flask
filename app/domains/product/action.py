@@ -1,10 +1,14 @@
-from app.domains.product.model import Product
-from database.repository import commit, save
-from uuid import uuid4
 from typing import List, NoReturn
-from app.domains.category.action import get_by_id as get_by_id_category
-from app.domains.product.schema import ProductSchema
+from uuid import uuid4
 
+from app.domains.category.action import get_by_id as get_by_id_category
+from app.domains.category.model import Category
+from app.domains.category.schema import CategorySchema
+from app.domains.product.model import Product, category_product
+from app.domains.product.schema import ProductSchema
+from database.repository import commit, save
+
+CategorySchemaMa = CategorySchema()
 ProductSchemaMa = ProductSchema()
 
 
@@ -16,7 +20,7 @@ def get_all_products() -> List:
     return Product.query.all()
 
 
-def get(data) -> List:
+def get(data: dict) -> List:
     if data['name'] != "" and data['description'] == "" and data['value'] == "":
         return Product.query.filter_by(name=data['name'])
     elif data['name'] == "" and data['description'] != "" and data['value'] == "":
@@ -26,6 +30,15 @@ def get(data) -> List:
     elif data['name'] != "" and data['description'] != "" and data['value'] != "":
         return Product.query.filter_by(name=data['name']).filter_by(description=data['description']).filter_by(
             value=data['value'])
+
+
+def get_by_all_values(data: dict) -> List:
+    category = Category.query.filter_by(name=data['category_name']).first()
+    category_serialize = CategorySchemaMa.dump(category)
+    product = Product.query.filter_by(name=data['name']).filter_by(description=data['description']).filter_by(
+        value=data['value']).first()
+    product_serialize = ProductSchemaMa.dump(product)
+    return get_product_with_category_name(product_serialize, category_serialize)
 
 
 def get_by_id(_product_id: str) -> Product:
@@ -54,3 +67,24 @@ def update_product_with_category(_product_id: str, _category_id: str) -> dict:
     _product_serialize = ProductSchemaMa.dump(_product)
     _product_serialize.update({'category_id': _category_id})
     return _product_serialize
+
+
+def get_product_with_category_name(product_id: dict, category_id: dict) -> List:
+    if not product_id or not category_id:
+        return []
+    return Product.query.join(category_product).join(Category).filter(
+        (category_product.c.product_id == product_id['id']) &
+        (category_product.c.category_id == category_id['id'])).all()
+
+
+def get_by_category_name_only(data: dict) -> List:
+    category = Category.query.filter_by(name=data['category_name']).first()
+    category_serialize = CategorySchemaMa.dump(category)
+    return get_category_name_with_auxiliar_table(category_serialize)
+
+
+def get_category_name_with_auxiliar_table(category_id: dict) -> List:
+    if not category_id:
+        return []
+    return Product.query.join(category_product).join(Category).filter(
+        (category_product.c.category_id == category_id['id'])).all()
